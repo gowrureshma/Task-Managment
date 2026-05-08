@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const config = require('./index');
 
 /**
  * Connect to MongoDB Database
@@ -6,9 +7,7 @@ const mongoose = require('mongoose');
  */
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/team-task-manager';
-    
-    const conn = await mongoose.connect(mongoURI, {
+    const conn = await mongoose.connect(config.mongodbUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
