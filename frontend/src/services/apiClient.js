@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://rare-enchantment-production-41fd.up.railway.app//api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://rare-enchantment-production-41fd.up.railway.app/api';
 
 // Create axios instance
 const apiClient = axios.create({
