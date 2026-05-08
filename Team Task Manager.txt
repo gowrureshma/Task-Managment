@@ -1,0 +1,230 @@
+Team Task Manager
+
+A production-ready full-stack web application for efficient project and task management with clean architecture, secure coding practices, and scalable design.
+
+Features
+
+User Management
+
+* User registration and authentication
+* JWT-based token authentication
+* Role-based access control (Admin/Member)
+* Password hashing with bcrypt
+
+Project Management
+
+* Create and manage projects
+* Add team members to projects
+* Project status tracking
+* Admin-only deletion
+
+Task Management
+
+* Create and assign tasks
+* Update task status and priority
+* Track due dates and overdue tasks
+* Task filtering and sorting
+* Dashboard statistics
+
+Dashboard Analytics
+
+* Task statistics (completed, pending, in progress, overdue)
+* Progress tracking
+* Overall completion percentage
+* Recent tasks list
+
+User Interface
+
+* Responsive design for all devices
+* Intuitive navigation
+* Real-time error handling
+* Loading states
+* Form validation
+
+Quick Start
+
+Prerequisites
+
+* Node.js v14 or higher
+* MongoDB (local or cloud)
+* npm or yarn
+
+Installation
+
+Clone the project
+
+```bash id="7hl0p3"
+cd project
+```
+
+Setup Backend
+
+```bash id="wwm2d1"
+cd backend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Update `.env` with your MongoDB URI and JWT secret.
+
+Setup Frontend (in new terminal)
+
+```bash id="vvw4yo"
+cd frontend
+npm install
+cp .env.example .env
+npm start
+```
+
+Access the application
+
+Frontend:
+
+```bash id="zq6z9x"
+http://localhost:3000
+```
+
+Backend:
+
+```bash id="7iq3kr"
+http://localhost:5000
+```
+
+Documentation
+
+* Backend Setup Guide
+* Frontend Setup Guide
+* Complete Setup Guide
+* API Collection (Postman)
+
+API Endpoints
+
+Authentication
+
+```bash id="y5wnjt"
+POST   /api/auth/signup
+POST   /api/auth/login
+GET    /api/auth/me
+```
+
+Projects
+
+```bash id="jwkn9n"
+POST   /api/projects
+GET    /api/projects
+GET    /api/projects/:id
+PUT    /api/projects/:id
+DELETE /api/projects/:id
+```
+
+Tasks
+
+```bash id="cn1p8w"
+POST   /api/tasks
+GET    /api/tasks
+GET    /api/tasks/user/assigned
+PATCH  /api/tasks/:id/status
+GET    /api/tasks/stats/dashboard
+```
+
+Project Structure
+
+```bash id="jlwm84"
+project/
+├── backend/
+├── frontend/
+├── postman-collection.json
+├── SETUP_GUIDE.md
+└── README.md
+```
+
+Security Features
+
+* JWT token-based authentication
+* Password hashing with bcrypt
+* Role-based access control
+* Input validation and sanitization
+* Protected API endpoints
+* CORS configuration
+* Error handling without exposing internals
+
+Tech Stack
+
+Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT Authentication
+* bcryptjs
+
+Frontend
+
+* React.js with Hooks
+* React Router
+* Tailwind CSS
+* Axios
+* Context API
+
+Database Schema
+
+Users
+
+* Profile information
+* Authentication credentials
+* Role assignment
+
+Projects
+
+* Project details
+* Team member assignments
+* Status and due dates
+
+Tasks
+
+* Task details
+* Assignments
+* Status tracking
+* Priority levels
+* Due dates
+
+Testing
+
+Use the included Postman collection:
+
+* Import `postman-collection.json` into Postman
+* Set environment variables
+* Test all endpoints
+
+Demo Credentials
+
+Admin
+
+```bash id="6x0m1v"
+Email: admin@example.com
+Password: password123
+```
+
+Member
+
+```bash id="7r9bvl"
+Email: member@example.com
+Password: password123
+```
+
+Deployment
+
+Backend (Heroku/Railway)
+
+* Set environment variables
+* Deploy from root directory
+
+Frontend (Vercel/Netlify)
+
+```bash id="s9th1w"
+npm run build
+```
+
+Deploy the build folder.
