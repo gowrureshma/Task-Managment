@@ -19,8 +19,12 @@ connectDB();
  */
 app.use(cors({
   origin: true,
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,6 +34,13 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.get("/", (req, res) => {
   res.send("Team Task Manager Backend Running Successfully");
+});
+
+/**
+ * Test Route
+ */
+app.post("/test", (req, res) => {
+  res.json({ success: true });
 });
 
 /**
