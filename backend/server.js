@@ -18,8 +18,7 @@ connectDB();
  * Middleware
  */
 app.use(cors({
-  origin: "https://zonal-emotion-production-45d8.up.railway.app",
-  credentials: true
+  origin: "*"
 }));
 
 app.use(express.json());
