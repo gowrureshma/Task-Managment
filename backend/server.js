@@ -17,9 +17,20 @@ connectDB();
 /**
  * Middleware
  */
-app.use(cors());
+app.use(cors({
+  origin: "https://zonal-emotion-production-45d8.up.railway.app",
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+/**
+ * Root Route
+ */
+app.get("/", (req, res) => {
+  res.send("Team Task Manager Backend Running Successfully");
+});
 
 /**
  * API Routes
@@ -39,15 +50,15 @@ app.use(errorHandler);
 /**
  * Start Server
  */
-const PORT = config.port;
+const PORT = config.port || process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║       🚀 Team Task Manager Backend Server Started 🚀      ║
 ╠════════════════════════════════════════════════════════════╣
-║  Server:    http://localhost:${PORT}                             ║
-║  API Docs:  http://localhost:${PORT}/api/health                 ║
-║  Database:  ${config.mongodbUri}
+║  Server:    http://localhost:${PORT}                      ║
+║  API Docs:  http://localhost:${PORT}/api/health           ║
 ║  Environment: ${config.nodeEnv}                           ║
 ╚════════════════════════════════════════════════════════════╝
   `);
