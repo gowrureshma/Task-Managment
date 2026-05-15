@@ -1,8 +1,11 @@
 require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
+
 const connectDB = require('./src/config/database');
 const config = require('./src/config');
+
 const apiRoutes = require('./src/routes');
 const errorHandler = require('./src/middleware/errorHandler');
 const notFoundHandler = require('./src/middleware/notFoundHandler');
@@ -10,37 +13,41 @@ const notFoundHandler = require('./src/middleware/notFoundHandler');
 const app = express();
 
 /**
- * Connect to MongoDB
- */
-connectDB();
-
-/**
- * Middleware
+ * CORS Configuration
  */
 app.use(cors({
   origin: true,
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.options("*", cors());
+app.options('*', cors());
 
+/**
+ * Body Parser Middleware
+ */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /**
  * Root Route
  */
-app.get("/", (req, res) => {
-  res.send("Team Task Manager Backend Running Successfully");
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Team Task Manager Backend Running Successfully'
+  });
 });
 
 /**
  * Test Route
  */
-app.post("/test", (req, res) => {
-  res.json({ success: true });
+app.post('/test', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Test API Working'
+  });
 });
 
 /**
@@ -54,31 +61,77 @@ app.use('/api', apiRoutes);
 app.use(notFoundHandler);
 
 /**
- * Error Handler (must be last)
+ * Global Error Handler
  */
 app.use(errorHandler);
 
 /**
- * Start Server
+ * PORT
  */
-const PORT = config.port || process.env.PORT || 3000;
+const PORT = process.env.PORT || config.port || 3000;
 
-app.listen(PORT, () => {
-  console.log(`
+/**
+ * Start Server Function
+ */
+const startServer = async () => {
+  try {
+
+    /**
+     * Connect MongoDB
+     */
+    await connectDB();
+
+    console.log('✅ MongoDB Connected Successfully');
+
+    /**
+     * Start Express Server
+     */
+    app.listen(PORT, '0.0.0.0', () => {
+
+      console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║       🚀 Team Task Manager Backend Server Started 🚀      ║
 ╠════════════════════════════════════════════════════════════╣
-║  Server:    http://localhost:${PORT}                      ║
-║  API Docs:  http://localhost:${PORT}/api/health           ║
-║  Environment: ${config.nodeEnv}                           ║
+║  Port: ${PORT}
+║  Environment: ${process.env.NODE_ENV || 'development'}
+║  Backend Status: RUNNING
 ╚════════════════════════════════════════════════════════════╝
-  `);
+      `);
+
+    });
+
+  } catch (error) {
+
+    console.error('❌ Failed to Start Server');
+    console.error(error);
+
+    process.exit(1);
+  }
+};
+
+/**
+ * Run Server
+ */
+startServer();
+
+/**
+ * Handle Unhandled Promise Rejections
+ */
+process.on('unhandledRejection', (err) => {
+
+  console.error('❌ Unhandled Rejection');
+  console.error(err);
+
+  process.exit(1);
 });
 
 /**
- * Handle unhandled promise rejections
+ * Handle Uncaught Exceptions
  */
-process.on('unhandledRejection', (err) => {
-  console.error(`✗ Unhandled Rejection: ${err.message}`);
+process.on('uncaughtException', (err) => {
+
+  console.error('❌ Uncaught Exception');
+  console.error(err);
+
   process.exit(1);
 });
